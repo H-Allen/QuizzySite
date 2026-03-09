@@ -6,134 +6,161 @@
     <title>Quizzy | Edinburgh's Daily Student Prize League</title>
     <meta name="description" content="The ultimate daily prize league for University of Edinburgh, Napier, and Heriot-Watt students. Win cash daily, join mini-leagues, and climb the leaderboard.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Indie+Flower&family=Permanent+Marker&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --paper-white: #faf9f6;
-            --paper-aged: #f5f5f0;
-            --sticky-yellow: #fef3c7;
-            --ink-navy: #1e3a5f;
-            --ink-navy-light: #2c5282;
-            --line-gray: #d1d5db;
-            --tape-color: rgba(255, 255, 255, 0.4);
-            --highlighter: rgba(254, 243, 199, 0.6);
+            --blue-ink: #003366;
+            --highlighter: #FFFF00;
+            --paper: #FAF9F6;
+            --line: #E8E4DC;
         }
         
         body {
-            background-color: var(--paper-white);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--paper);
             background-image: repeating-linear-gradient(
                 transparent,
-                transparent 28px,
-                var(--line-gray) 28px,
-                rgba(209, 213, 219, 0.4) 29px
+                transparent 31px,
+                var(--line) 31px,
+                var(--line) 32px
             );
-            background-size: 100% 30px;
-            color: var(--ink-navy);
-            font-family: 'Kalam', cursive;
+            background-size: 100% 32px;
+            color: var(--blue-ink);
+            overflow-x: hidden;
         }
         
-        .font-marker { font-family: 'Permanent Marker', cursive; }
-        .font-caveat { font-family: 'Caveat', cursive; }
-        .font-indie { font-family: 'Indie Flower', cursive; }
-        
-        .torn-paper {
-            background: var(--paper-aged);
-            position: relative;
-            box-shadow: 0 1px 3px rgba(30, 58, 95, 0.15), 0 4px 12px rgba(30, 58, 95, 0.1);
-            border-radius: 2px;
+        .handwritten {
+            font-family: 'Caveat', cursive;
         }
         
-        .torn-paper::before, .torn-paper::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            height: 20px;
-            background: inherit;
-            z-index: 1;
-        }
-        
-        .torn-paper::before {
-            top: -10px;
-            clip-path: polygon(0% 50%, 2% 40%, 4% 50%, 6% 35%, 8% 50%, 10% 45%, 12% 50%, 15% 30%, 18% 50%, 20% 40%, 22% 50%, 25% 35%, 28% 50%, 30% 42%, 32% 50%, 35% 38%, 38% 50%, 40% 45%, 42% 50%, 45% 32%, 48% 50%, 50% 40%, 52% 50%, 55% 35%, 58% 50%, 60% 42%, 62% 50%, 65% 30%, 68% 50%, 70% 40%, 72% 50%, 75% 38%, 78% 50%, 80% 45%, 82% 50%, 85% 35%, 88% 50%, 90% 42%, 92% 50%, 95% 40%, 97% 50%, 100% 45%);
-        }
-        
-        .torn-paper::after {
-            bottom: -10px;
-            clip-path: polygon(0% 50%, 3% 60%, 5% 50%, 8% 65%, 10% 50%, 13% 55%, 15% 50%, 18% 70%, 20% 50%, 23% 60%, 25% 50%, 28% 65%, 30% 50%, 33% 58%, 35% 50%, 38% 68%, 40% 50%, 43% 60%, 45% 50%, 48% 55%, 50% 50%, 53% 62%, 55% 50%, 58% 70%, 60% 50%, 63% 60%, 65% 50%, 68% 65%, 70% 50%, 72% 58%, 75% 50%, 78% 68%, 80% 50%, 82% 60%, 85% 50%, 88% 55%, 90% 50%, 93% 65%, 95% 50%, 97% 60%, 100% 50%);
-        }
-        
-        .tape {
-            position: relative;
-        }
-        
-        .tape::before {
-            content: '';
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%) rotate(-2deg);
-            width: 120px;
-            height: 35px;
-            background: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-            border-left: 1px dashed rgba(0,0,0,0.1);
-            border-right: 1px dashed rgba(0,0,0,0.1);
-            backdrop-filter: blur(1px);
-            z-index: 10;
-        }
-        
-        .sticky-note {
-            background: var(--sticky-yellow);
-            box-shadow: 2px 3px 8px rgba(30, 58, 95, 0.1);
-            transform: rotate(-1deg);
+        .sketchy-border {
+            border: 2.5px solid var(--blue-ink);
+            border-radius: 2px 255px 3px 25px / 255px 5px 225px 5px;
+            box-shadow: 3px 4px 0px rgba(0, 51, 102, 0.15);
             transition: all 0.3s ease;
         }
         
-        .sticky-note:hover { transform: rotate(0deg) translateY(-2px); }
-        
-        .photo-card {
-            background: white;
-            padding: 10px 10px 35px 10px;
-            box-shadow: 0 4px 15px rgba(30, 58, 95, 0.1);
-            transform: rotate(-2deg);
+        .sketchy-border:hover {
+            box-shadow: 4px 5px 0px rgba(0, 51, 102, 0.2);
+            transform: translateY(-2px) rotate(0.5deg);
         }
         
-        .push-pin::after {
+        .sketchy-box {
+            border: 2px solid var(--blue-ink);
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+            box-shadow: 2px 3px 0px rgba(0, 51, 102, 0.1);
+        }
+        
+        .torn-paper {
+            background: white;
+            position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transform: rotate(-1deg);
+        }
+        
+        .torn-paper::before {
+            content: "";
+            position: absolute;
+            top: -12px;
+            left: 0;
+            width: 100%;
+            height: 24px;
+            background: white;
+            clip-path: polygon(
+                0% 50%, 3% 0%, 6% 50%, 9% 0%, 12% 50%, 15% 0%, 18% 50%, 21% 0%, 
+                24% 50%, 27% 0%, 30% 50%, 33% 0%, 36% 50%, 39% 0%, 42% 50%, 45% 0%, 
+                48% 50%, 51% 0%, 54% 50%, 57% 0%, 60% 50%, 63% 0%, 66% 50%, 69% 0%, 
+                72% 50%, 75% 0%, 78% 50%, 81% 0%, 84% 50%, 87% 0%, 90% 50%, 93% 0%, 
+                96% 50%, 100% 0%, 100% 100%, 0% 100%
+            );
+        }
+        
+        .tape {
+            position: absolute;
+            width: 100px;
+            height: 30px;
+            background: rgba(255, 255, 0, 0.3);
+            transform: rotate(-45deg);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            backdrop-filter: blur(2px);
+            z-index: 10;
+        }
+        
+        .highlighter-text {
+            background: linear-gradient(180deg, transparent 50%, var(--highlighter) 50%, var(--highlighter) 85%, transparent 85%);
+            padding: 0 4px;
+        }
+        
+        .glow-button {
+            background: var(--blue-ink);
+            color: white;
+            border: 2px solid var(--blue-ink);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glow-button::before {
             content: '';
             position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 14px;
-            height: 14px;
-            background: radial-gradient(circle at 30% 30%, #4a90e2, #1e3a5f);
-            border-radius: 50%;
-            box-shadow: 1px 2px 3px rgba(0,0,0,0.2);
-            z-index: 20;
-        }
-        
-        .highlight {
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
             background: var(--highlighter);
-            padding: 0 4px;
-            border-radius: 2px;
+            transition: left 0.3s ease;
+            z-index: 0;
         }
         
-        .btn-primary {
-            background: var(--ink-navy);
+        .glow-button:hover::before {
+            left: 0;
+        }
+        
+        .glow-button:hover {
+            box-shadow: 0 0 20px rgba(255, 255, 0, 0.6), 0 0 40px rgba(255, 255, 0, 0.3);
+            color: var(--blue-ink);
+            border-color: var(--highlighter);
+        }
+        
+        .glow-button span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .doodle {
+            position: absolute;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        .scribble-underline {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .scribble-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M0 5 Q 25 10, 50 5 T 100 5' stroke='%23003366' fill='none' stroke-width='2'/%3E%3C/svg%3E");
+            background-size: 100% 100%;
+        }
+
+        .timer-slot {
+            background: var(--blue-ink);
             color: white;
-            transition: all 0.2s;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 0 2px;
         }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 5px 15px rgba(30, 58, 95, 0.3);
-        }
-        
+
         .sticky-mobile-cta {
             position: fixed;
             bottom: 20px;
@@ -146,313 +173,415 @@
         @media (max-width: 768px) {
             .sticky-mobile-cta { display: block; }
         }
+
+        .odometer {
+            background: #f0f0f0;
+            border: 3px solid var(--blue-ink);
+            border-radius: 10px;
+            display: inline-flex;
+            padding: 10px 20px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 2rem;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1), 3px 4px 0px rgba(0, 51, 102, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
         
-        .timer-slot {
-            background: #222;
-            color: #fff;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: monospace;
+        .odometer-digit {
+            background: white;
+            border: 1px solid #ccc;
             margin: 0 2px;
+            padding: 5px;
+            min-width: 30px;
+            text-align: center;
+            border-radius: 4px;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .odometer {
+                font-size: 1.5rem;
+                padding: 8px 12px;
+            }
+            .odometer-digit {
+                min-width: 24px;
+                padding: 3px;
+            }
         }
     </style>
 </head>
-<body class="overflow-x-hidden">
+<body class="min-h-screen overflow-x-hidden">
+
+    <!-- SVG Filters for Sketchy Effect -->
+    <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <filter id="sketchy">
+                <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="noise" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
+            </filter>
+        </defs>
+    </svg>
 
     <!-- Sticky Mobile CTA -->
     <div class="sticky-mobile-cta md:hidden">
-        <button class="btn-primary w-full py-4 font-marker text-xl shadow-2xl transform -rotate-1">
-            Join the League!
+        <button class="glow-button w-full py-4 handwritten text-2xl font-bold shadow-2xl transform -rotate-1">
+            <span>Join the League!</span>
         </button>
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 px-4 py-3">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <div class="font-marker text-2xl rotate-1">Quizzy</div>
-            <div class="hidden lg:flex items-center space-x-6 text-sm">
-                <div class="flex items-center bg-yellow-100 px-3 py-1 rounded-full border border-yellow-200">
-                    <span class="mr-2">Next Drop:</span>
+    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b-2 border-dashed border-[#003366] px-4 py-3">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="handwritten text-3xl font-bold rotate-1 text-[#003366]">Quizzy</div>
+            <div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+                <div class="flex items-center bg-[#FFFF00]/30 px-3 py-1 rounded-full border-2 border-[#003366] sketchy-box">
+                    <span class="mr-2 handwritten text-lg">Next Drop:</span>
                     <span class="timer-slot" id="h">02</span>:
                     <span class="timer-slot" id="m">41</span>:
                     <span class="timer-slot" id="s">15</span>
                 </div>
-                <a href="#how" class="hover:underline">How it works</a>
-                <a href="#prizes" class="hover:underline">Prizes</a>
-                <a href="#winners" class="hover:underline">Recent Winners</a>
+                <a href="#how" class="handwritten text-xl hover:underline">How it works</a>
+                <a href="#prizes" class="handwritten text-xl hover:underline">Prizes</a>
+                <a href="#winners" class="handwritten text-xl hover:underline">Winners</a>
             </div>
-            <button class="btn-primary px-6 py-2 font-marker text-sm -rotate-1">
-                App Store
+            <button class="glow-button px-6 py-2 handwritten text-lg font-bold -rotate-1">
+                <span>App Store</span>
             </button>
         </div>
     </nav>
 
+    <!-- Decorative Doodles -->
+    <div class="doodle top-32 left-10 rotate-12">
+        <i data-lucide="star" class="w-8 h-8 text-[#003366] fill-current"></i>
+    </div>
+    <div class="doodle top-40 right-20 -rotate-12">
+        <i data-lucide="lightbulb" class="w-10 h-10 text-[#003366]"></i>
+    </div>
+    <div class="doodle bottom-40 left-20 rotate-45">
+        <i data-lucide="sparkles" class="w-12 h-12 text-[#003366]"></i>
+    </div>
+
     <!-- Hero Section -->
-    <header class="pt-32 pb-16 px-4">
-        <div class="max-w-4xl mx-auto text-center relative">
-            <div class="torn-paper tape p-8 md:p-12 mb-8 transform -rotate-1 inline-block">
-                <h1 class="font-marker text-5xl md:text-7xl lg:text-8xl leading-none mb-4">
+    <header class="pt-40 pb-16 px-4 max-w-7xl mx-auto">
+        <div class="text-center relative">
+            <div class="tape -top-10 left-1/2 -translate-x-1/2 z-10"></div>
+            
+            <div class="torn-paper p-8 md:p-12 mb-8 transform -rotate-1 inline-block">
+                <h1 class="handwritten text-5xl md:text-7xl lg:text-8xl font-bold text-[#003366] leading-none mb-4">
                     Izzy Wizzy<br>Let's Get Quizzy!
                 </h1>
-                <p class="font-caveat text-3xl md:text-4xl opacity-80">
+                <p class="handwritten text-3xl md:text-4xl text-[#003366] opacity-80">
                     The Biggest Pub Quiz in Town.
                 </p>
             </div>
             
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-6 mt-4">
+            <div class="mt-8 flex flex-col sm:flex-row justify-center items-center gap-6">
                 <div class="relative">
-                    <button class="btn-primary px-10 py-4 font-marker text-2xl transform rotate-1">
-                        Sign Up Today!
+                    <button class="glow-button px-10 py-4 handwritten text-3xl font-bold transform rotate-1">
+                        <span>Sign Up Today!</span>
                     </button>
-                    <p class="text-xs mt-2 opacity-60">*Exclusive to @ed.ac.uk, @napier, @hw.ac.uk</p>
+                    <p class="handwritten text-lg mt-3 text-[#003366] opacity-70">*Exclusive to @ed.ac.uk, @napier, @hw.ac.uk</p>
                 </div>
             </div>
 
-            <div class="mt-12 flex justify-center items-center space-x-2 text-sm opacity-80">
-                <div class="flex -space-x-2">
-                    <img src="https://i.pravatar.cc/40?img=1" class="w-8 h-8 rounded-full border-2 border-white">
-                    <img src="https://i.pravatar.cc/40?img=2" class="w-8 h-8 rounded-full border-2 border-white">
-                    <img src="https://i.pravatar.cc/40?img=3" class="w-8 h-8 rounded-full border-2 border-white">
+            <div class="mt-12 flex justify-center items-center space-x-3">
+                <div class="flex -space-x-3">
+                    <img src="https://i.pravatar.cc/100?img=1" class="w-10 h-10 rounded-full border-2 border-[#003366] sketchy-box">
+                    <img src="https://i.pravatar.cc/100?img=2" class="w-10 h-10 rounded-full border-2 border-[#003366] sketchy-box">
+                    <img src="https://i.pravatar.cc/100?img=3" class="w-10 h-10 rounded-full border-2 border-[#003366] sketchy-box">
                 </div>
-                <p><span class="highlight font-bold">247 students</span> joined since yesterday</p>
+                <p class="handwritten text-xl"><span class="highlighter-text font-bold">247 students</span> joined since yesterday</p>
             </div>
         </div>
     </header>
 
-    <!-- How It Works Strip -->
-    <section id="how" class="py-16 bg-gray-50/50">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="font-marker text-4xl mb-2">The 4 Steps to Rent Money</h2>
-                <div class="w-24 h-1 bg-blue-900 mx-auto"></div>
+    <!-- How It Works Section -->
+    <section id="how" class="py-20 px-4 max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="handwritten text-5xl font-bold text-[#003366] scribble-underline inline-block">
+                The 4 Steps to Rent Money
+            </h2>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="sketchy-box p-6 bg-white transform rotate-1 hover:rotate-0 transition-transform relative">
+                <div class="tape -top-4 left-1/2 -translate-x-1/2 w-16 h-8 opacity-40"></div>
+                <span class="handwritten text-4xl font-bold text-[#003366] opacity-20 absolute top-2 right-4">01</span>
+                <h3 class="handwritten text-2xl font-bold mb-3 text-[#003366]">Join & Verify</h3>
+                <p class="text-gray-700">Sign up with your .ac.uk email. We keep it strictly students to keep the competition fair.</p>
             </div>
             
-            <div class="grid md:grid-cols-4 gap-8">
-                <div class="relative group">
-                    <div class="sticky-note p-6 h-full push-pin">
-                        <span class="font-marker text-4xl opacity-10 absolute top-2 right-4">01</span>
-                        <h3 class="font-marker text-xl mb-3">Join & Verify</h3>
-                        <p class="text-sm">Sign up with your .ac.uk email. We keep it strictly students to keep the competition fair.</p>
-                    </div>
-                </div>
-                <div class="relative group mt-4 md:mt-0">
-                    <div class="sticky-note p-6 h-full push-pin" style="transform: rotate(2deg)">
-                        <span class="font-marker text-4xl opacity-10 absolute top-2 right-4">02</span>
-                        <h3 class="font-marker text-xl mb-3">Watch for the Alert</h3>
-                        <p class="text-sm">Like BeReal, questions drop at random times. You get one notification. Don't blink.</p>
-                    </div>
-                </div>
-                <div class="relative group mt-4 md:mt-0">
-                    <div class="sticky-note p-6 h-full push-pin" style="transform: rotate(-1deg)">
-                        <span class="font-marker text-4xl opacity-10 absolute top-2 right-4">03</span>
-                        <h3 class="font-marker text-xl mb-3">One Shot, One Tap</h3>
-                        <p class="text-sm">One question. Fastest correct answer wins. Every millisecond counts towards your rank.</p>
-                    </div>
-                </div>
-                <div class="relative group mt-4 md:mt-0">
-                    <div class="sticky-note p-6 h-full push-pin" style="transform: rotate(1deg)">
-                        <span class="font-marker text-4xl opacity-10 absolute top-2 right-4">04</span>
-                        <h3 class="font-marker text-xl mb-3">Collect & Brag</h3>
-                        <p class="text-sm">City Pot payouts every Sunday. Cash straight to your app wallet. Withdraw instantly.</p>
-                    </div>
-                </div>
+            <div class="sketchy-box p-6 bg-white transform -rotate-1 hover:rotate-0 transition-transform relative">
+                <div class="tape -top-4 left-1/2 -translate-x-1/2 w-16 h-8 opacity-40"></div>
+                <span class="handwritten text-4xl font-bold text-[#003366] opacity-20 absolute top-2 right-4">02</span>
+                <h3 class="handwritten text-2xl font-bold mb-3 text-[#003366]">Watch for the Alert</h3>
+                <p class="text-gray-700">Like BeReal, questions drop at random times. You get one notification. Don't blink.</p>
+            </div>
+            
+            <div class="sketchy-box p-6 bg-white transform rotate-2 hover:rotate-0 transition-transform relative">
+                <div class="tape -top-4 left-1/2 -translate-x-1/2 w-16 h-8 opacity-40"></div>
+                <span class="handwritten text-4xl font-bold text-[#003366] opacity-20 absolute top-2 right-4">03</span>
+                <h3 class="handwritten text-2xl font-bold mb-3 text-[#003366]">One Shot, One Tap</h3>
+                <p class="text-gray-700">One question. Fastest correct answer wins. Every millisecond counts towards your rank.</p>
+            </div>
+            
+            <div class="sketchy-box p-6 bg-white transform -rotate-2 hover:rotate-0 transition-transform relative">
+                <div class="tape -top-4 left-1/2 -translate-x-1/2 w-16 h-8 opacity-40"></div>
+                <span class="handwritten text-4xl font-bold text-[#003366] opacity-20 absolute top-2 right-4">04</span>
+                <h3 class="handwritten text-2xl font-bold mb-3 text-[#003366]">Collect & Brag</h3>
+                <p class="text-gray-700">City Pot payouts every Sunday. Cash straight to your app wallet. Withdraw instantly.</p>
             </div>
         </div>
     </section>
 
-    <!-- Prize & Trust Feed -->
-    <section id="prizes" class="py-20 px-4">
-        <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-start">
+    <!-- Prize & Winners Section -->
+    <section id="prizes" class="py-20 px-4 max-w-6xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
             <div class="torn-paper p-8 transform -rotate-1">
-                <h2 class="font-marker text-3xl mb-6">Transparency Report: The City Pot</h2>
-                <div class="space-y-4 text-sm">
-                    <div class="flex justify-between border-b border-dashed border-gray-300 pb-2">
-                        <span>Weekly Entry Fee</span>
-                        <span class="font-bold">£0.99</span>
+                <div class="tape -top-5 left-1/2 -translate-x-1/2 rotate-3 bg-opacity-40"></div>
+                <h2 class="handwritten text-4xl font-bold mb-8 text-[#003366] scribble-underline inline-block">The City Pot</h2>
+                
+                <div class="space-y-6">
+                    <div class="flex justify-between border-b-2 border-dashed border-[#E8E4DC] pb-2">
+                        <span class="handwritten text-2xl">Weekly Entry Fee</span>
+                        <span class="handwritten text-2xl font-bold">£0.99</span>
                     </div>
-                    <div class="flex justify-between border-b border-dashed border-gray-300 pb-2">
-                        <span>Contribution to Daily Pot</span>
-                        <span class="font-bold">85%</span>
+                    <div class="flex justify-between border-b-2 border-dashed border-[#E8E4DC] pb-2">
+                        <span class="handwritten text-2xl">Contribution to Pot</span>
+                        <span class="handwritten text-2xl font-bold">85%</span>
                     </div>
-                    <div class="flex justify-between border-b border-dashed border-gray-300 pb-2 text-green-700">
-                        <span>Current Active Players</span>
-                        <span class="font-bold">1,402</span>
+                    <div class="flex justify-between border-b-2 border-dashed border-[#E8E4DC] pb-2 text-green-700">
+                        <span class="handwritten text-2xl">Active Players</span>
+                        <span class="handwritten text-2xl font-bold">1,402</span>
                     </div>
-                    <div class="bg-blue-50 p-4 rounded-sm border-l-4 border-blue-900 mt-6">
-                        <p class="font-bold mb-1">How it's calculated:</p>
-                        <p>The "City Pot" is the sum of entry fees minus operations. More players = Higher daily payouts. We take 0% of the prize pool.</p>
+                    
+                    <div class="sketchy-box p-4 bg-[#FAF9F6] mt-8">
+                        <p class="handwritten text-xl font-bold mb-1">How it's calculated:</p>
+                        <p class="text-sm">The "City Pot" is the sum of entry fees minus operations. More players = Higher daily payouts. We take 0% of the prize pool.</p>
                     </div>
                 </div>
                 
-                <div class="mt-8 flex items-center space-x-4 grayscale opacity-60">
-                    <span class="text-xs uppercase tracking-widest font-bold">Secure Payouts via:</span>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" class="h-4">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" class="h-4">
+                <div class="mt-8 flex items-center space-x-6 opacity-60">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" class="h-5">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" class="h-5">
                 </div>
             </div>
 
-            <div id="winners">
-                <h2 class="font-marker text-3xl mb-6">Live Winners Feed</h2>
+            <div id="winners" class="relative">
+                <div class="doodle -top-10 -right-4 rotate-12">
+                    <i data-lucide="crown" class="w-12 h-12 text-[#003366]"></i>
+                </div>
+                <h2 class="handwritten text-4xl font-bold mb-8 text-[#003366] scribble-underline inline-block">Live Winners Feed</h2>
+                
                 <div class="space-y-4">
-                    <div class="bg-white p-4 border border-gray-200 shadow-sm flex items-center justify-between transform rotate-1">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center font-marker">JS</div>
+                    <div class="bg-white sketchy-border p-4 flex items-center justify-between transform rotate-1">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-[#003366] text-white rounded-full flex items-center justify-center handwritten text-2xl font-bold">JS</div>
                             <div>
-                                <p class="font-bold leading-none">James S. (UoE)</p>
-                                <p class="text-xs opacity-60">Today @ 19:30:02</p>
+                                <p class="handwritten text-xl font-bold leading-none">James S. (UoE)</p>
+                                <p class="text-xs text-gray-500">Today @ 19:30:02</p>
                             </div>
                         </div>
-                        <div class="text-green-600 font-marker text-xl">+£142.50</div>
+                        <div class="handwritten text-3xl font-bold text-green-600">+£142.50</div>
                     </div>
-                    <div class="bg-white p-4 border border-gray-200 shadow-sm flex items-center justify-between transform -rotate-1">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center font-marker">ML</div>
+                    
+                    <div class="bg-white sketchy-border p-4 flex items-center justify-between transform -rotate-1">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-[#FFFF00] border-2 border-[#003366] rounded-full flex items-center justify-center handwritten text-2xl font-bold">ML</div>
                             <div>
-                                <p class="font-bold leading-none">Maya L. (Napier)</p>
-                                <p class="text-xs opacity-60">Yesterday @ 19:30:01</p>
+                                <p class="handwritten text-xl font-bold leading-none">Maya L. (Napier)</p>
+                                <p class="text-xs text-gray-500">Yesterday @ 19:30:01</p>
                             </div>
                         </div>
-                        <div class="text-green-600 font-marker text-xl">+£128.10</div>
+                        <div class="handwritten text-3xl font-bold text-green-600">+£128.10</div>
                     </div>
-                    <div class="text-center mt-6">
-                        <p class="font-caveat text-xl opacity-60">"It literally paid for my entire weekly shop."</p>
-                        <p class="text-xs font-bold uppercase mt-1">— Sarah T, Heriot-Watt</p>
+                    
+                    <div class="text-center mt-10">
+                        <p class="handwritten text-2xl italic text-[#003366] opacity-70">"It literally paid for my entire weekly shop."</p>
+                        <p class="handwritten text-lg font-bold uppercase mt-2">— Sarah T, Heriot-Watt</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Product Features -->
-    <section class="py-20 bg-blue-900 text-white relative overflow-hidden">
+    <!-- Features Section -->
+    <section class="py-20 bg-[#003366] text-white relative overflow-hidden">
         <div class="max-w-6xl mx-auto px-4 relative z-10">
             <div class="grid md:grid-cols-3 gap-12">
                 <div class="text-center">
-                    <i data-lucide="flame" class="w-12 h-12 mx-auto mb-4 text-orange-400"></i>
-                    <h3 class="font-marker text-2xl mb-2">Maintain Your Streak</h3>
-                    <p class="text-sm opacity-80">Play 5 days in a row to unlock the "Blitz Mode" multiplier and boost your score by 1.5x.</p>
+                    <i data-lucide="flame" class="w-12 h-12 mx-auto mb-4 text-[#FFFF00]"></i>
+                    <h3 class="handwritten text-3xl font-bold mb-3">Maintain Your Streak</h3>
+                    <p class="handwritten text-xl opacity-80">Play 5 days in a row to unlock the "Blitz Mode" multiplier and boost your score by 1.5x.</p>
                 </div>
                 <div class="text-center">
-                    <i data-lucide="users" class="w-12 h-12 mx-auto mb-4 text-blue-300"></i>
-                    <h3 class="font-marker text-2xl mb-2">Society Mini-Leagues</h3>
-                    <p class="text-sm opacity-80">Create a private league for your flat or society. Weekly pints on the person who comes last.</p>
+                    <i data-lucide="users" class="w-12 h-12 mx-auto mb-4 text-[#FFFF00]"></i>
+                    <h3 class="handwritten text-3xl font-bold mb-3">Society Mini-Leagues</h3>
+                    <p class="handwritten text-xl opacity-80">Create a private league for your flat or society. Weekly pints on the person who comes last.</p>
                 </div>
                 <div class="text-center">
-                    <i data-lucide="gift" class="w-12 h-12 mx-auto mb-4 text-pink-400"></i>
-                    <h3 class="font-marker text-2xl mb-2">Referral Rewards</h3>
-                    <p class="text-sm opacity-80">Invite 3 friends from your uni and get your next week's entry completely free.</p>
+                    <i data-lucide="gift" class="w-12 h-12 mx-auto mb-4 text-[#FFFF00]"></i>
+                    <h3 class="handwritten text-3xl font-bold mb-3">Referral Rewards</h3>
+                    <p class="handwritten text-xl opacity-80">Invite 3 friends from your uni and get your next week's entry completely free.</p>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Post-Game Stats Preview -->
-    <section class="py-20 px-4">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="font-marker text-4xl mb-12">Know Exactly Where You Stand</h2>
-            <div class="torn-paper p-8 md:p-12 transform rotate-1 bg-white inline-block w-full max-w-2xl">
-                <div class="flex justify-between items-end mb-8">
-                    <div class="text-left">
-                        <p class="text-xs uppercase font-bold opacity-50">Last Game Stats</p>
-                        <p class="font-marker text-3xl">Rank: #14 / 842</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="font-caveat text-2xl text-green-600">Top 2% Accuracy</p>
-                    </div>
-                </div>
-                <div class="grid grid-cols-3 gap-4 border-t border-b border-gray-200 py-6 mb-8">
-                    <div>
-                        <p class="text-xs opacity-60">Solve Time</p>
-                        <p class="font-marker text-xl">1.42s</p>
-                    </div>
-                    <div>
-                        <p class="text-xs opacity-60">Accuracy</p>
-                        <p class="font-marker text-xl">100%</p>
-                    </div>
-                    <div>
-                        <p class="text-xs opacity-60">Points</p>
-                        <p class="font-marker text-xl">+842</p>
-                    </div>
-                </div>
-                <p class="font-indie text-lg italic">"You were faster than 98% of Edinburgh students today!"</p>
-            </div>
+        <!-- Decorative doodles for dark background -->
+        <div class="doodle top-10 right-10 opacity-20">
+            <i data-lucide="zap" class="w-20 h-20 text-white"></i>
         </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="py-20 px-4 bg-gray-50/50">
+    <!-- Stats Preview -->
+    <section class="py-24 px-4 max-w-4xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="handwritten text-5xl font-bold text-[#003366]">Know Exactly Where You Stand</h2>
+        </div>
+        
+        <div class="torn-paper p-8 md:p-12 transform rotate-1 bg-white relative">
+            <div class="tape -top-6 left-1/4 rotate-12"></div>
+            <div class="flex justify-between items-end mb-8 border-b-2 border-dashed border-[#E8E4DC] pb-6">
+                <div class="text-left">
+                    <p class="handwritten text-xl uppercase font-bold opacity-50">Last Game Stats</p>
+                    <p class="handwritten text-4xl font-bold text-[#003366]">Rank: #14 / 842</p>
+                </div>
+                <div class="text-right">
+                    <p class="handwritten text-3xl text-green-600 font-bold">Top 2% Accuracy</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-8 py-6 mb-8 text-center">
+                <div>
+                    <p class="handwritten text-xl opacity-60">Solve Time</p>
+                    <p class="handwritten text-3xl font-bold text-[#003366]">1.42s</p>
+                </div>
+                <div>
+                    <p class="handwritten text-xl opacity-60">Accuracy</p>
+                    <p class="handwritten text-3xl font-bold text-[#003366]">100%</p>
+                </div>
+                <div>
+                    <p class="handwritten text-xl opacity-60">Points</p>
+                    <p class="handwritten text-3xl font-bold text-[#003366]">+842</p>
+                </div>
+            </div>
+            
+            <p class="handwritten text-2xl italic text-center text-[#003366] mt-4">
+                <span class="highlighter-text">"You were faster than 98% of Edinburgh students today!"</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 px-4 bg-[#FAF9F6]/50">
         <div class="max-w-3xl mx-auto">
-            <h2 class="font-marker text-4xl text-center mb-12">Your Doubts, Answered.</h2>
-            <div class="space-y-6">
-                <div class="bg-white p-6 border border-gray-200">
-                    <h4 class="font-bold mb-2">How do you prevent cheating?</h4>
-                    <p class="text-sm opacity-80">Our proprietary anti-cheat engine detects screen-sharing and bot patterns. One suspicious move and you're banned for life.</p>
+            <h2 class="handwritten text-5xl text-center mb-16 text-[#003366] scribble-underline inline-block w-full">Your Doubts, Answered.</h2>
+            
+            <div class="space-y-8">
+                <div class="sketchy-box p-8 bg-white transform -rotate-1">
+                    <h4 class="handwritten text-2xl font-bold mb-3 text-[#003366]">How do you prevent cheating?</h4>
+                    <p class="text-gray-700">Our proprietary anti-cheat engine detects screen-sharing and bot patterns. One suspicious move and you're banned for life.</p>
                 </div>
-                <div class="bg-white p-6 border border-gray-200">
-                    <h4 class="font-bold mb-2">What if two people answer at the exact same time?</h4>
-                    <p class="text-sm opacity-80">We measure response time to the microsecond. In the event of a true tie, the prize is split.</p>
+                
+                <div class="sketchy-box p-8 bg-white transform rotate-1">
+                    <h4 class="handwritten text-2xl font-bold mb-3 text-[#003366]">What if two people answer at the same time?</h4>
+                    <p class="text-gray-700">We measure response time to the microsecond. In the event of a true tie, the prize is split.</p>
                 </div>
-                <div class="bg-white p-6 border border-gray-200">
-                    <h4 class="font-bold mb-2">Is my data safe?</h4>
-                    <p class="text-sm opacity-80">We only use your uni email for verification. Everything else is handled securely by Stripe.</p>
+                
+                <div class="sketchy-box p-8 bg-white transform -rotate-1">
+                    <h4 class="handwritten text-2xl font-bold mb-3 text-[#003366]">Is my data safe?</h4>
+                    <p class="text-gray-700">We only use your uni email for verification. Everything else is handled securely by Stripe.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-20 px-4 border-t-2 border-dashed border-gray-300">
-        <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-12 mb-12">
+    <footer class="py-20 px-4 border-t-2 border-dashed border-[#003366] mt-16">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 mb-16">
             <div>
-                <h3 class="font-marker text-2xl mb-4">Quizzy</h3>
-                <p class="text-sm opacity-60 italic">Built by students, for students. Edinburgh, 2024.</p>
+                <h3 class="handwritten text-3xl font-bold mb-4 text-[#003366]">Quizzy</h3>
+                <p class="handwritten text-xl opacity-70 italic">Built by students, for students. Edinburgh, 2024.</p>
             </div>
             <div>
-                <h4 class="font-bold mb-4">The League</h4>
-                <ul class="text-sm space-y-2 opacity-80">
+                <h4 class="handwritten text-2xl font-bold mb-4 text-[#003366]">The League</h4>
+                <ul class="handwritten text-xl space-y-2 opacity-80">
                     <li><a href="#" class="hover:underline">University Rankings</a></li>
                     <li><a href="#" class="hover:underline">Ambassador Program</a></li>
                 </ul>
             </div>
             <div>
-                <h4 class="font-bold mb-4">Boring Stuff</h4>
-                <ul class="text-sm space-y-2 opacity-80">
+                <h4 class="handwritten text-2xl font-bold mb-4 text-[#003366]">Boring Stuff</h4>
+                <ul class="handwritten text-xl space-y-2 opacity-80">
                     <li><a href="#" class="hover:underline">Terms of Service</a></li>
                     <li><a href="#" class="hover:underline">Privacy Policy</a></li>
-                    <li><a href="#" class="hover:underline">Anti-Cheat Rules</a></li>
                 </ul>
             </div>
             <div>
-                <h4 class="font-bold mb-4">Help</h4>
-                <ul class="text-sm space-y-2 opacity-80">
+                <h4 class="handwritten text-2xl font-bold mb-4 text-[#003366]">Help</h4>
+                <ul class="handwritten text-xl space-y-2 opacity-80">
                     <li><a href="#" class="hover:underline">Support Center</a></li>
                     <li><a href="#" class="hover:underline">Contact Us</a></li>
                 </ul>
             </div>
         </div>
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-200 opacity-60 text-xs">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center pt-8 border-t border-[#E8E4DC] text-gray-500 font-medium">
             <p>© 2024 Quizzy App Ltd. All rights reserved.</p>
-            <div class="flex space-x-4 mt-4 md:mt-0">
-                <a href="#"><i data-lucide="instagram" class="w-4 h-4"></i></a>
-                <a href="#"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+            <div class="flex space-x-6 mt-6 md:mt-0 text-[#003366]">
+                <a href="#" class="hover:scale-110 transition-transform"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+                <a href="#" class="hover:scale-110 transition-transform"><i data-lucide="twitter" class="w-6 h-6"></i></a>
             </div>
         </div>
     </footer>
 
     <script>
+        // Initialize Lucide icons
         lucide.createIcons();
+        
+        // Timer Logic
         function updateTimer() {
             const h = document.getElementById('h');
             const m = document.getElementById('m');
             const s = document.getElementById('s');
             let hours = parseInt(h.innerText), mins = parseInt(m.innerText), secs = parseInt(s.innerText);
+            
             if (secs > 0) secs--;
-            else { secs = 59; if (mins > 0) mins--; else { mins = 59; if (hours > 0) hours--; else hours = 3; } }
+            else { 
+                secs = 59; 
+                if (mins > 0) mins--; 
+                else { 
+                    mins = 59; 
+                    if (hours > 0) hours--; 
+                    else hours = 23; 
+                } 
+            }
+            
             h.innerText = hours.toString().padStart(2, '0');
             m.innerText = mins.toString().padStart(2, '0');
             s.innerText = secs.toString().padStart(2, '0');
         }
         setInterval(updateTimer, 1000);
+
+        // Add random rotation to scrapbook elements
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.sketchy-border, .sketchy-box').forEach((el) => {
+                if (!el.classList.contains('transform')) {
+                    const rot = (Math.random() - 0.5) * 3;
+                    el.style.transform = `rotate(${rot}deg)`;
+                }
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
     </script>
 </body>
 </html>
