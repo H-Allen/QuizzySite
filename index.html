@@ -209,6 +209,71 @@
                 padding: 3px;
             }
         }
+
+        .story-step {
+    opacity: 0.28;
+    transform: translateY(40px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.story-step .step-inner {
+    transform: scale(0.96) rotate(-1deg);
+    transition: transform 0.45s ease, box-shadow 0.45s ease, filter 0.45s ease;
+    box-shadow: 0 10px 30px rgba(0, 51, 102, 0.06);
+    filter: saturate(0.9);
+}
+
+.story-step:nth-child(even) .step-inner {
+    transform: scale(0.96) rotate(1deg);
+}
+
+.story-step.is-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.story-step.is-active .step-inner {
+    transform: scale(1) rotate(0deg);
+    box-shadow: 0 18px 40px rgba(0, 51, 102, 0.14);
+    filter: saturate(1);
+}
+
+.story-preview-card {
+    transition: transform 0.45s ease, box-shadow 0.45s ease;
+    box-shadow: 0 18px 40px rgba(0, 51, 102, 0.12);
+}
+
+.story-preview-card.is-popping {
+    transform: rotate(-0.5deg) translateY(-4px);
+}
+
+.story-step-badge {
+    line-height: 1;
+    opacity: 0.25;
+}
+
+.story-mini-ui {
+    transition: transform 0.35s ease, background-color 0.35s ease;
+}
+
+.story-mini-ui.flash {
+    transform: scale(1.015);
+    background-color: #fffef2;
+}
+
+@media (max-width: 1023px) {
+    .story-step {
+        opacity: 1;
+        transform: none;
+    }
+
+    .story-step .step-inner,
+    .story-step:nth-child(even) .step-inner,
+    .story-step.is-active .step-inner {
+        transform: rotate(0deg) scale(1);
+    }
+}
+
     </style>
 </head>
 <body class="min-h-screen overflow-x-hidden">
@@ -297,43 +362,130 @@
     </header>
 
     <!-- How It Works Section -->
-    <section id="how" class="py-20 px-4 max-w-6xl mx-auto">
-        <div class="text-center mb-16">
-            <h2 class="handwritten text-5xl font-bold text-[#003366] scribble-underline inline-block">
-                The 4 Steps to Rent Money
-            </h2>
+    <section id="how" class="py-24 px-4 max-w-6xl mx-auto">
+    <div class="text-center mb-16">
+        <h2 class="handwritten text-5xl font-bold text-[#003366] scribble-underline inline-block">
+            The 4 Steps to Rent Money
+        </h2>
+        <p class="mt-4 text-gray-600 max-w-2xl mx-auto">
+            Scroll down — each step snaps into focus like a note pinned to your wall.
+        </p>
+    </div>
+
+    <div class="grid lg:grid-cols-[0.95fr_1.05fr] gap-10 items-start">
+        <!-- Sticky preview -->
+        <div class="lg:sticky lg:top-28 self-start">
+            <div class="torn-paper p-8 md:p-10 relative story-preview-card">
+                <div class="tape -top-5 left-10 rotate-[-8deg] opacity-50"></div>
+
+                <div class="flex items-start justify-between gap-6 mb-6">
+                    <div>
+                        <p class="handwritten text-xl opacity-60">Live walkthrough</p>
+                        <h3 class="handwritten text-4xl md:text-5xl font-bold text-[#003366]" data-story-title>
+                            Join & Verify
+                        </h3>
+                    </div>
+
+                    <div class="story-step-badge handwritten text-4xl font-bold text-[#003366]" data-story-number>
+                        01
+                    </div>
+                </div>
+
+                <p class="text-lg text-gray-700 mb-6 leading-relaxed" data-story-copy>
+                    Sign up with your .ac.uk email. We keep it strictly students to keep the competition fair.
+                </p>
+
+                <div class="sketchy-box bg-[#FAF9F6] p-5 mb-6">
+                    <p class="handwritten text-xl font-bold text-[#003366] mb-2" data-story-label>
+                        Student verification
+                    </p>
+                    <div class="flex flex-wrap gap-3 text-sm font-medium">
+                        <span class="px-3 py-2 rounded-full border-2 border-[#003366] bg-white" data-pill-a>.ac.uk only</span>
+                        <span class="px-3 py-2 rounded-full border-2 border-[#003366] bg-white" data-pill-b>Fast approval</span>
+                    </div>
+                </div>
+
+                <div class="story-mini-ui sketchy-border bg-white p-5 relative overflow-hidden">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="handwritten text-2xl text-[#003366]" data-ui-heading>Quizzy Alert</span>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-gray-500">Demo</span>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between border-b border-dashed border-[#E8E4DC] pb-3">
+                            <span class="text-gray-600">Status</span>
+                            <span class="handwritten text-2xl text-[#003366]" data-ui-status>Verified</span>
+                        </div>
+                        <div class="flex items-center justify-between border-b border-dashed border-[#E8E4DC] pb-3">
+                            <span class="text-gray-600">Window</span>
+                            <span class="handwritten text-2xl text-[#003366]" data-ui-window>Ready to play</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-600">Energy</span>
+                            <span class="handwritten text-2xl text-[#003366]" data-ui-energy>Calm before chaos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 h-3 bg-[#E8E4DC] rounded-full overflow-hidden">
+                    <div class="h-full bg-[#003366] transition-all duration-500 ease-out" style="width: 25%;" data-story-progress></div>
+                </div>
+            </div>
         </div>
-        
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="sketchy-box p-6 bg-white transform rotate-1 hover:rotate-0 transition-transform relative">
-                <div class="tape -top-4 left-1/2 -translate-x-1/2 w-16 h-8 opacity-40"></div>
-                <span class="handwritten text-4xl font-bold text-[#003366] opacity-20 absolute top-2 right-4">01</span>
-                <h3 class="handwritten text-2xl font-bold mb-3 text-[#003366]">Join & Verify</h3>
-                <p class="text-gray-700">Sign up with your .ac.uk email. We keep it strictly students to keep the competition fair.</p>
-            </div>
-            
-            <div class="sketchy-box p-6 bg-white transform -rotate-1 hover:rotate-0 transition-transform relative">
-                <div class="tape -top-4 left-1/2 -translate-x-1/2 w-16 h-8 opacity-40"></div>
-                <span class="handwritten text-4xl font-bold text-[#003366] opacity-20 absolute top-2 right-4">02</span>
-                <h3 class="handwritten text-2xl font-bold mb-3 text-[#003366]">Watch for the Alert</h3>
-                <p class="text-gray-700">Like BeReal, questions drop at random times. You get one notification. Don't blink.</p>
-            </div>
-            
-            <div class="sketchy-box p-6 bg-white transform rotate-2 hover:rotate-0 transition-transform relative">
-                <div class="tape -top-4 left-1/2 -translate-x-1/2 w-16 h-8 opacity-40"></div>
-                <span class="handwritten text-4xl font-bold text-[#003366] opacity-20 absolute top-2 right-4">03</span>
-                <h3 class="handwritten text-2xl font-bold mb-3 text-[#003366]">One Shot, One Tap</h3>
-                <p class="text-gray-700">One question. Fastest correct answer wins. Every millisecond counts towards your rank.</p>
-            </div>
-            
-            <div class="sketchy-box p-6 bg-white transform -rotate-2 hover:rotate-0 transition-transform relative">
-                <div class="tape -top-4 left-1/2 -translate-x-1/2 w-16 h-8 opacity-40"></div>
-                <span class="handwritten text-4xl font-bold text-[#003366] opacity-20 absolute top-2 right-4">04</span>
-                <h3 class="handwritten text-2xl font-bold mb-3 text-[#003366]">Collect & Brag</h3>
-                <p class="text-gray-700">City Pot payouts every Sunday. Cash straight to your app wallet. Withdraw instantly.</p>
-            </div>
+
+        <!-- Scroll steps -->
+        <div class="space-y-8">
+            <article class="story-step min-h-[72vh] flex items-center" data-step="1">
+                <div class="step-inner sketchy-box bg-white p-8 md:p-10 w-full relative">
+                    <div class="tape -top-4 left-12 opacity-40 w-16 h-8"></div>
+                    <span class="handwritten text-5xl font-bold text-[#003366]/20 absolute top-4 right-6">01</span>
+                    <p class="handwritten text-2xl text-[#003366] mb-2">Step one</p>
+                    <h3 class="handwritten text-4xl font-bold mb-4 text-[#003366]">Join & Verify</h3>
+                    <p class="text-lg text-gray-700 max-w-xl">
+                        Sign up with your .ac.uk email. Keep it students-only, keep it fair, keep it competitive.
+                    </p>
+                </div>
+            </article>
+
+            <article class="story-step min-h-[72vh] flex items-center" data-step="2">
+                <div class="step-inner sketchy-box bg-white p-8 md:p-10 w-full relative">
+                    <div class="tape -top-4 left-12 opacity-40 w-16 h-8 rotate-[6deg]"></div>
+                    <span class="handwritten text-5xl font-bold text-[#003366]/20 absolute top-4 right-6">02</span>
+                    <p class="handwritten text-2xl text-[#003366] mb-2">Step two</p>
+                    <h3 class="handwritten text-4xl font-bold mb-4 text-[#003366]">Watch for the Alert</h3>
+                    <p class="text-lg text-gray-700 max-w-xl">
+                        The question drops at a random moment. One ping, one chance, no time to overthink it.
+                    </p>
+                </div>
+            </article>
+
+            <article class="story-step min-h-[72vh] flex items-center" data-step="3">
+                <div class="step-inner sketchy-box bg-white p-8 md:p-10 w-full relative">
+                    <div class="tape -top-4 left-12 opacity-40 w-16 h-8 rotate-[-5deg]"></div>
+                    <span class="handwritten text-5xl font-bold text-[#003366]/20 absolute top-4 right-6">03</span>
+                    <p class="handwritten text-2xl text-[#003366] mb-2">Step three</p>
+                    <h3 class="handwritten text-4xl font-bold mb-4 text-[#003366]">One Shot, One Tap</h3>
+                    <p class="text-lg text-gray-700 max-w-xl">
+                        Fastest correct answer wins. The whole section should feel like pressure building, then release.
+                    </p>
+                </div>
+            </article>
+
+            <article class="story-step min-h-[72vh] flex items-center" data-step="4">
+                <div class="step-inner sketchy-box bg-white p-8 md:p-10 w-full relative">
+                    <div class="tape -top-4 left-12 opacity-40 w-16 h-8 rotate-[4deg]"></div>
+                    <span class="handwritten text-5xl font-bold text-[#003366]/20 absolute top-4 right-6">04</span>
+                    <p class="handwritten text-2xl text-[#003366] mb-2">Step four</p>
+                    <h3 class="handwritten text-4xl font-bold mb-4 text-[#003366]">Collect Bragging Rights</h3>
+                    <p class="text-lg text-gray-700 max-w-xl">
+                        End on the payoff: rank, cash, and proof you were quicker than everyone else today.
+                    </p>
+                </div>
+            </article>
         </div>
-    </section>
+    </div>
+</section>
+
 
     <!-- Prize & Winners Section -->
     <section id="prizes" class="py-20 px-4 max-w-6xl mx-auto">
@@ -583,5 +735,110 @@
             });
         });
     </script>
+    <script>
+    const storyData = {
+        1: {
+            number: "01",
+            title: "Join & Verify",
+            copy: "Sign up with your .ac.uk email. We keep it strictly students to keep the competition fair.",
+            label: "Student verification",
+            pillA: ".ac.uk only",
+            pillB: "Fast approval",
+            heading: "Quizzy Alert",
+            status: "Verified",
+            window: "Ready to play",
+            energy: "Calm before chaos",
+            progress: "25%"
+        },
+        2: {
+            number: "02",
+            title: "Watch for the Alert",
+            copy: "Like BeReal, questions drop at random times. You get one notification. Don’t blink.",
+            label: "Drop system",
+            pillA: "Random timing",
+            pillB: "One notification",
+            heading: "Incoming drop",
+            status: "Armed",
+            window: "5-second pressure",
+            energy: "Heart rate rising",
+            progress: "50%"
+        },
+        3: {
+            number: "03",
+            title: "One Shot, One Tap",
+            copy: "One question. Fastest correct answer wins. Every millisecond counts towards your rank.",
+            label: "Reaction phase",
+            pillA: "Speed matters",
+            pillB: "No second go",
+            heading: "Race mode",
+            status: "Live now",
+            window: "Tap instantly",
+            energy: "Pure panic",
+            progress: "75%"
+        },
+        4: {
+            number: "04",
+            title: "Collect Bragging Rights",
+            copy: "City Pot payouts every Sunday. Cash straight to your app wallet. Withdraw instantly.",
+            label: "Weekly payout",
+            pillA: "Cash reward",
+            pillB: "Leaderboard flex",
+            heading: "Winner feed",
+            status: "Paid out",
+            window: "Sunday drop",
+            energy: "Rent secured",
+            progress: "100%"
+        }
+    };
+
+    const storySteps = document.querySelectorAll(".story-step");
+    const previewCard = document.querySelector(".story-preview-card");
+
+    function updateStory(stepNumber) {
+        const data = storyData[stepNumber];
+        if (!data) return;
+
+        document.querySelector("[data-story-number]").textContent = data.number;
+        document.querySelector("[data-story-title]").textContent = data.title;
+        document.querySelector("[data-story-copy]").textContent = data.copy;
+        document.querySelector("[data-story-label]").textContent = data.label;
+        document.querySelector("[data-pill-a]").textContent = data.pillA;
+        document.querySelector("[data-pill-b]").textContent = data.pillB;
+        document.querySelector("[data-ui-heading]").textContent = data.heading;
+        document.querySelector("[data-ui-status]").textContent = data.status;
+        document.querySelector("[data-ui-window]").textContent = data.window;
+        document.querySelector("[data-ui-energy]").textContent = data.energy;
+        document.querySelector("[data-story-progress]").style.width = data.progress;
+
+        previewCard.classList.remove("is-popping");
+        void previewCard.offsetWidth;
+        previewCard.classList.add("is-popping");
+
+        const miniUI = document.querySelector(".story-mini-ui");
+        miniUI.classList.remove("flash");
+        void miniUI.offsetWidth;
+        miniUI.classList.add("flash");
+    }
+
+    const storyObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            const step = entry.target.dataset.step;
+
+            if (entry.isIntersecting) {
+                storySteps.forEach((card) => card.classList.remove("is-active"));
+                entry.target.classList.add("is-active");
+                updateStory(step);
+            }
+        });
+    }, {
+        threshold: 0.55,
+        rootMargin: "0px 0px -12% 0px"
+    });
+
+    storySteps.forEach((step) => storyObserver.observe(step));
+    updateStory(1);
+    storySteps[0]?.classList.add("is-active");
+</script>
+
 </body>
 </html>
